@@ -1,0 +1,25 @@
+variables:
+  IMAGE_NAME: datev-tax-backend-dev/notification-server
+  FULL_IMAGE: $OPENSHIFT_REGISTRY/$IMAGE_NAME:latest
+
+build:
+  image: adorsys/ci-build
+  except:
+    - master
+  script:
+    - npm ci
+    - npm run test
+    - npm run build
+
+deploy:
+  image: adorsys/ci-build
+  only:
+    - master
+  before_script:
+    - echo "${OPENSHIFT_TOKEN}" | docker login -u openshift --password-stdin "${OPENSHIFT_REGISTRY}"
+  script:
+    - npm ci
+    - npm run test
+    - npm run build
+    - docker build -t "${FULL_IMAGE}" .
+    - docker push "${FULL_IMAGE}"
