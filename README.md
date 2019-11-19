@@ -1,3 +1,25 @@
+# notification-service
+
+In this project we want to implement a notification-service that solves the following problem.
+
+## Problemdescription
+
+In the enterprise environment access to the servers in the enterprise datacenter is protected with a firewall.
+The firewall is usually configured to prohibit websocket connections. So when you have a client running outside
+of the enterprise datacenter and want a websocket connection you need to fallback on polling or longpolling with
+all the drawbacks like performance and bandwith overhead.
+
+## Possible solution
+
+A notification server hosted outside of the enterprise datacenter can provide clients the possibility to
+open a private websocket connection. The client is given a webhook that can be used to send notification over the 
+websocket connection to the client. The client can pass this webhook url to services running in the enterprise 
+datacenter so that they can notify the client by calling the webhook.
+
+## Sequence Diagramm
+![Example](http://www.plantuml.com/plantuml/png/LP0nRiCm34LtdOB8tWjqA08KMRlq13BDr8ATJrMaukRsbLeRWIS2N-y_2ZoRn-BrjeJSPkAK8vpUboHjH2C-v1_gwPeuUb9yIhbBwGp2e3zqki2bv99Cw89xAegRm4y7mRDaGJ1IAuPONL5lGyi3qyiRWLv9iu1M6Knv5YTMGBYl3UW8DwI8POK9hScdpawgCzMo_5li3_ckOXvixsm1HMR9BcEm7Lsrp0bVfEZYkcmbj2SJZ5lOHXmV_G-R4FqYZyFhS_rLdATTTswMTkTV "Example")
+
+
 # Notification-server
 
 Notification-server is a ready to use push notification server supporting multi-session and authentication. It was built using [Node.js](https://nodejs.org) and [Socket.IO](http://socket.io/). The main purpose of notification-server is to provide an **easy**, **stable** and **secure** solution which can be used to send push notifications to a client application.
