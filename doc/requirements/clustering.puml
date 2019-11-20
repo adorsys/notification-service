@@ -1,0 +1,34 @@
+@startuml
+component UserDevice1
+component UserDevice2
+
+cloud "enterprise dc" {
+    component entpriseLoadBalancer
+    component ApplicationServer1
+    component ApplicationServer2
+}
+
+cloud "e.g. amazon" {
+    component cloudLoadBalancer
+    component notificationServer1
+    component notificationServer2
+    component redis
+}
+
+cloudLoadBalancer --> notificationServer1
+cloudLoadBalancer --> notificationServer2
+
+notificationServer1 <--> redis
+notificationServer2 <--> redis
+
+entpriseLoadBalancer --> ApplicationServer1
+entpriseLoadBalancer --> ApplicationServer2
+
+UserDevice1 --> cloudLoadBalancer
+UserDevice2 --> cloudLoadBalancer
+
+UserDevice1 --> entpriseLoadBalancer
+UserDevice2 --> entpriseLoadBalancer
+
+ApplicationServer1 -left-> cloudLoadBalancer #Green: notify user
+@enduml
