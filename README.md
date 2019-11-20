@@ -66,7 +66,7 @@ docker run -d -p 3000:3000 \
 * fetch the git repository
 
 ```sh
-git clone https://git.adorsys.de/datev/tax/notification-server.git
+git clone https://github.com/adorsys/notification-service.git
 ```
 
 * install app dependencies using npm
