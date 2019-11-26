@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app.kubernetes.io/name: redis
+    helm.sh/chart: {{ include "notification-service.chart" . }}
+    chart: "redis-{{ .Chart.Version | replace "+" "_" }}"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: redis
+    spec:
+      containers:
+        - name: redis
+          image: "redis:5.0.6"
+          ports:
+            - containerPort: 6379
+          command: ["redis-server"]
+          env:
+            - name: REDIS_HOST
+              value: redis://cache
+            - name: AUTH_TOKEN
+              value: "dummyToken"
+
+
