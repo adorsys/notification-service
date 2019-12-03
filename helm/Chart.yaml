@@ -1,0 +1,8 @@
+apiVersion: v1
+appVersion: "1.0"
+description: Notification server supporting multi-session and authentication
+name: notification-service
+version: 0.1.0
+sources:
+- https://github.com/adorsys/notification-service
+
