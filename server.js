@@ -1,3 +1,7 @@
+'use strict';
+
+
+
 const app = require('express')();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
@@ -9,6 +13,10 @@ app.set('port', (process.env.PORT || 3000));
 app.set('redisHost', (process.env.REDIS_HOST || 'redis'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+var Prometheus = require('./util/prometheus');
+app.use(Prometheus.requestCounters);
+app.use(Prometheus.responseCounters);
 
 const redisClient = redis.createClient(process.env.REDIS_HOST);
 const getAsync = promisify(redisClient.get).bind(redisClient);
@@ -204,3 +212,6 @@ http.listen(app.get('port'), function() {
 redisClient.on('error', (err) => {
 	console.log('\n[REDIS-ERROR]: ', err.message);
 });
+
+Prometheus.injectMetricsRoute(app);
+Prometheus.startCollection();
