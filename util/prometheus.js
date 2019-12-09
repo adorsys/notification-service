@@ -7,6 +7,13 @@ var Histogram = require('prom-client').Histogram;
 var Summary = require('prom-client').Summary;  
 var ResponseTime = require('response-time');  
 
+// Customized Http Metrics (Optional)
+module.exports.totalHttpRequestStatusCount = totalHttpRequestStatusCount = new Counter({
+  name: 'nodejs_http_total_status_code_count',
+  help: 'total request number',
+  labelNames: ['status']
+});
+
 /**
  * A Prometheus counter that counts the invocations of the different HTTP verbs
  * e.g. a GET and a POST call will be counted as 2 different calls
@@ -62,6 +69,7 @@ module.exports.requestCounters = function (req, res, next) {
 module.exports.responseCounters = ResponseTime(function (req, res, time) {  
     if(req.url != '/metrics') {
         responses.labels(req.method, req.url, res.statusCode).observe(time);
+        totalHttpRequestStatusCount.labels(res.statusCode).inc();
     }
 })
 
