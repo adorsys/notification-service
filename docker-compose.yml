@@ -3,8 +3,9 @@ version: '3'
 services:
   app:
     build: .
+    depends_on:
+      - redis
     image: notification-service:latest
-    container_name: app
     working_dir: /var/app
     user: root
     ports:
@@ -16,8 +17,17 @@ services:
     command: ["npm", "run", "first-start"]
     env_file:
       - .env
-    links:
+
+  app-testing:
+    depends_on:
       - redis
+      - app
+    image: notification-service:latest
+    networks:
+      - adorsys
+    command: ["npm", "run", "start"]
+    env_file:
+      - .env
 
   redis:
     image: redis:5.0.6
