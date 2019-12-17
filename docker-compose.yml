@@ -17,15 +17,6 @@ services:
     env_file:
       - .env
 
-  app-testing:
-    depends_on:
-      - redis
-      - app
-    image: notification-service:latest
-    networks:
-      - adorsys
-    command: ["npm", "run", "start"]
-
   app2:
     build: .
     image: notification-service:latest
@@ -41,6 +32,21 @@ services:
     command: ["npm", "run", "first-start"]
     env_file:
       - .env
+
+  app-testing:
+    depends_on:
+      - redis
+      - app1
+      - app2
+    image: notification-service:latest
+    working_dir: /var/app
+    volumes:
+      - ./:/var/app
+    env_file:
+      - .env
+    networks:
+      - adorsys
+    command: ["npm", "run", "start"]
 
   redis:
     image: redis:5.0.6
