@@ -11,9 +11,9 @@
 		"first-start": "npm install; npm run start"
 	},
 	"dependencies": {
-		"body-parser": "^1.12.4",
+		"body-parser": "^1.20.1",
 		"cors": "^2.6.0",
-		"express": "^4.12.4",
+		"express": "^4.18.2",
 		"redis": "^2.8.0",
 		"got": "^9.6.0",
 		"json-mock": "^0.1.0",
