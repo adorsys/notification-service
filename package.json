@@ -13,7 +13,7 @@
 	"dependencies": {
 		"body-parser": "^1.12.4",
 		"cors": "^2.6.0",
-		"express": "^4.12.4",
+		"express": "^4.17.3",
 		"redis": "^2.8.0",
 		"got": "^9.6.0",
 		"json-mock": "^0.1.0",
